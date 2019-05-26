@@ -270,6 +270,8 @@ int irq_do_set_affinity(struct irq_data *data, const struct cpumask *mask,
 	} else {
 		ret = chip->irq_set_affinity(data, mask, force);
 	}
+	/* IRQs only run on the first CPU in the affinity mask; reflect that */
+	mask = cpumask_of(cpumask_first(mask));
 	switch (ret) {
 	case IRQ_SET_MASK_OK:
 	case IRQ_SET_MASK_OK_DONE:
