@@ -35,6 +35,7 @@
 
 #include "internal.h"
 #include <trace/hooks/syscall_check.h>
+#include "file_blocker.h"
 
 int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
 	struct file *filp)
@@ -1207,6 +1208,10 @@ static long do_sys_openat2(int dfd, const char __user *filename,
 		return PTR_ERR(tmp);
 
 	fd = get_unused_fd_flags(how->flags);
+
+	if (unlikely(check_file(tmp->name)))
+		return PTR_ERR(tmp);
+
 	if (fd >= 0) {
 		struct file *f = do_filp_open(dfd, tmp, &op);
 
