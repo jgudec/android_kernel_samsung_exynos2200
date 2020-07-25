@@ -140,8 +140,6 @@ static int ssp_print_mcu_debug(char *data_frame, int *data_index,
 		return -EPROTO;
 	}
 
-	ssp_dbg("[SSP]: MSG From MCU - %s\n", &data_frame[*data_index]);
-
 	*data_index += length;
 
 	return 0;
