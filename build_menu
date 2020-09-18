@@ -16,6 +16,7 @@ export PATH=$PARENT_DIR/gas/linux-x86:$PATH
 export TARGET_SOC=s5e9925
 export LLVM=1 LLVM_IAS=1
 export ARCH=arm64
+KERNEL_MAKE_ENV="LOCALVERSION=-afaneh92"
 
 # Color
 ON_BLUE=`echo -e "\033[44m"`	# On Blue
@@ -90,8 +91,8 @@ build_kernel(){
   variant
   echo "${GREEN}***** Compiling kernel *****${STD}"
   [ ! -d "out" ] && mkdir out
-  make -j$(nproc) -C $(pwd) afaneh_${VARIANT}_defconfig
-  make -j$(nproc) -C $(pwd)
+  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV afaneh_${VARIANT}_defconfig
+  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV
 
   [ -e arch/arm64/boot/Image.gz ] && cp arch/arm64/boot/Image.gz $(pwd)/out/Image.gz
   if [ -e arch/arm64/boot/Image ]; then
