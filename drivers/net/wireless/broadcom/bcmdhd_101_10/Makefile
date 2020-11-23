@@ -878,7 +878,7 @@ ifneq ($(filter y m,$(CONFIG_BCM4375)),)
   DHDCFLAGS += -DWL_SAE
  endif
  DHDCFLAGS += -DWL_STATIC_IF
- DHDCFLAGS += -DWL_STATIC_IFNAME_PREFIX="\"swlan0\""
+ DHDCFLAGS += -DWL_STATIC_IFNAME_PREFIX="\"wlan1\""
  #OWE
  DHDCFLAGS += -DWL_OWE
  # Disable HE on P2P
