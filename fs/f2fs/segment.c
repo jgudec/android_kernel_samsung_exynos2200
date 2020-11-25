@@ -569,6 +569,7 @@ void f2fs_balance_fs_bg(struct f2fs_sb_info *sbi, bool from_bg)
 	/* there is background inflight IO or foreground operation recently */
 	if (is_inflight_io(sbi, REQ_TIME) ||
 		(!f2fs_time_over(sbi, REQ_TIME) && f2fs_rwsem_is_locked(&sbi->cp_rwsem)))
+
 		return;
 
 	/* exceed periodical checkpoint timeout threshold */
