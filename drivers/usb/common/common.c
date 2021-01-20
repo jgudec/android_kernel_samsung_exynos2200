@@ -82,12 +82,6 @@ static const char *const ssp_rate[] = {
 	[USB_SSP_GEN_2x2] = "super-speed-plus-gen2x2",
 };
 
-/**
- * usb_speed_string() - Returns human readable-name of the speed.
- * @speed: The speed to return human-readable name for.  If it's not
- *   any of the speeds defined in usb_device_speed enum, string for
- *   USB_SPEED_UNKNOWN will be returned.
- */
 const char *usb_speed_string(enum usb_device_speed speed)
 {
 	if (speed < 0 || speed >= ARRAY_SIZE(speed_names))
@@ -122,15 +116,6 @@ enum usb_device_speed usb_get_maximum_speed(struct device *dev)
 }
 EXPORT_SYMBOL_GPL(usb_get_maximum_speed);
 
-/**
- * usb_get_maximum_ssp_rate - Get the signaling rate generation and lane count
- *	of a SuperSpeed Plus capable device.
- * @dev: Pointer to the given USB controller device
- *
- * If the string from "maximum-speed" property is super-speed-plus-genXxY where
- * 'X' is the generation number and 'Y' is the number of lanes, then this
- * function returns the corresponding enum usb_ssp_rate.
- */
 enum usb_ssp_rate usb_get_maximum_ssp_rate(struct device *dev)
 {
 	const char *maximum_speed;
@@ -145,12 +130,6 @@ enum usb_ssp_rate usb_get_maximum_ssp_rate(struct device *dev)
 }
 EXPORT_SYMBOL_GPL(usb_get_maximum_ssp_rate);
 
-/**
- * usb_state_string - Returns human readable name for the state.
- * @state: The state to return a human-readable name for. If it's not
- *	any of the states devices in usb_device_state_string enum,
- *	the string UNKNOWN will be returned.
- */
 const char *usb_state_string(enum usb_device_state state)
 {
 	static const char *const names[] = {
