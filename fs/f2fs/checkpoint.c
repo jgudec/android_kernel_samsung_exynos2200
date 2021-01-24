@@ -1249,7 +1249,9 @@ retry_flush_dents:
 		err = f2fs_sync_dirty_inodes(sbi, DIR_INODE);
 		if (err)
 			goto out;
+#ifdef CONFIG_F2FS_SEC_BLOCK_OPERATIONS_DEBUG
 		sec_dbg_add_time(dbg_entry, DENTS, s_jiffies);
+#endif
 		cond_resched();
 		goto retry_flush_quotas;
 	}
@@ -1268,7 +1270,9 @@ retry_flush_dents:
 		err = f2fs_sync_inode_meta(sbi);
 		if (err)
 			goto out;
+#ifdef CONFIG_F2FS_SEC_BLOCK_OPERATIONS_DEBUG
 		sec_dbg_add_time(dbg_entry, IMETA, s_jiffies);
+#endif
 		cond_resched();
 		goto retry_flush_quotas;
 	}
@@ -1288,7 +1292,9 @@ retry_flush_nodes:
 			f2fs_unlock_all(sbi);
 			goto out;
 		}
+#ifdef CONFIG_F2FS_SEC_BLOCK_OPERATIONS_DEBUG
 		sec_dbg_add_time(dbg_entry, NODES, s_jiffies);
+#endif
 		cond_resched();
 		goto retry_flush_nodes;
 	}
