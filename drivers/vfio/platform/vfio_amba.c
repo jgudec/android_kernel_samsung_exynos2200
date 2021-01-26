@@ -78,7 +78,6 @@ static void vfio_amba_remove(struct amba_device *adev)
 
 	kfree(vdev->name);
 	kfree(vdev);
-	return 0;
 }
 
 static const struct amba_id pl330_ids[] = {
