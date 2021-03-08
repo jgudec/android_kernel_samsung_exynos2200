@@ -53,6 +53,9 @@ extern const char *usb_state_string(enum usb_device_state state);
 unsigned int usb_decode_interval(const struct usb_endpoint_descriptor *epd,
 				 enum usb_device_speed speed);
 
+unsigned int usb_decode_interval(const struct usb_endpoint_descriptor *epd,
+				 enum usb_device_speed speed);
+
 #ifdef CONFIG_TRACING
 extern const char *usb_decode_ctrl(char *str, size_t size, __u8 bRequestType,
 				   __u8 bRequest, __u16 wValue, __u16 wIndex,
