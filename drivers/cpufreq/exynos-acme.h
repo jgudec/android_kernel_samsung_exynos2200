@@ -80,6 +80,7 @@ struct exynos_cpufreq_domain {
 	bool				fast_switch_possible;
 	bool				work_in_progress;
 	unsigned int			cached_fast_switch_freq;
+	unsigned int			user_default_qos;
 
 	struct irq_work			fast_switch_irq_work;
 	struct kthread_work		fast_switch_work;

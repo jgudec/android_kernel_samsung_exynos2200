@@ -1830,6 +1830,10 @@ static int init_domain(struct exynos_cpufreq_domain *domain,
 
 	kfree(fv_table);
 
+	/* Default QoS for user */
+	if (!of_property_read_u32(dn, "user-default-qos", &val))
+		domain->user_default_qos = val;
+
 	/*
 	 * Initialize other items.
 	 */
