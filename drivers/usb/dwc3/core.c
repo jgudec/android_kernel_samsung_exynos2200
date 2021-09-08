@@ -264,25 +264,6 @@ static int dwc3_core_soft_reset(struct dwc3 *dwc)
 {
 	u32		reg;
 	int		retries = 1000;
-	int		ret;
-	int		i;
-
-	for (i = 0; i < 3; i++) {
-		pr_info("%s +++\n", __func__);
-
-		usb_phy_init(dwc->usb2_phy);
-		usb_phy_init(dwc->usb3_phy);
-		pr_info("%s: init_count:%d, power_count:%d\n", __func__,
-				dwc->usb2_generic_phy->init_count, dwc->usb2_generic_phy->power_count);
-		ret = phy_init(dwc->usb2_generic_phy);
-		if (ret < 0)
-			return ret;
-
-		ret = phy_init(dwc->usb3_generic_phy);
-		if (ret < 0) {
-			phy_exit(dwc->usb2_generic_phy);
-			return ret;
-		}
 
 		/*
 		 * We're resetting only the device side because, if we're in host mode,
@@ -305,6 +286,7 @@ static int dwc3_core_soft_reset(struct dwc3 *dwc)
 		if (DWC3_VER_IS_WITHIN(DWC31, 190A, ANY) || DWC3_IP_IS(DWC32))
 			retries = 10;
 
+
 		do {
 			reg = dwc3_readl(dwc->regs, DWC3_DCTL);
 			if (!(reg & DWC3_DCTL_CSFTRST))
@@ -315,11 +297,6 @@ static int dwc3_core_soft_reset(struct dwc3 *dwc)
 			else
 				udelay(1);
 		} while (--retries);
-
-		phy_exit(dwc->usb3_generic_phy);
-		phy_exit(dwc->usb2_generic_phy);
-		pr_info("%s soft_reset retry %d\n", __func__, i + 1);
-	}
 
 	return -ETIMEDOUT;
 
@@ -992,9 +969,21 @@ static int dwc3_core_init(struct dwc3 *dwc)
 		dwc->phys_ready = true;
 	}
 
+	usb_phy_init(dwc->usb2_phy);
+	usb_phy_init(dwc->usb3_phy);
+	ret = phy_init(dwc->usb2_generic_phy);
+	if (ret < 0)
+		goto err0a;
+
+	ret = phy_init(dwc->usb3_generic_phy);
+	if (ret < 0) {
+		phy_exit(dwc->usb2_generic_phy);
+		goto err0a;
+	}
+
 	ret = dwc3_core_soft_reset(dwc);
 	if (ret)
-		goto err0a;
+		goto err1;
 
 	if (hw_mode == DWC3_GHWPARAMS0_MODE_DRD &&
 	    !DWC3_VER_IS_WITHIN(DWC3, ANY, 194A)) {
