@@ -981,6 +981,10 @@ ifdef CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
 KBUILD_CFLAGS += -falign-functions=32
 endif
 
+ifdef CONFIG_SOC_EXYNOS9830
+KBUILD_CFLAGS	+= $(call cc-option,-mcpu=cortex-a76.cortex-a55,$(call cc-option,-mcpu=cortex-a55))
+endif
+
 # arch Makefile may override CC so keep this after arch Makefile is included
 NOSTDINC_FLAGS += -nostdinc -isystem $(shell $(CC) -print-file-name=include)
 
