@@ -1065,7 +1065,7 @@ static void device_complete(struct device *dev, pm_message_t state)
 	const char *info = NULL;
 
 	if (dev->power.syscore)
-		return;
+		goto out;
 
 	device_lock(dev);
 
@@ -1095,6 +1095,7 @@ static void device_complete(struct device *dev, pm_message_t state)
 
 	device_unlock(dev);
 
+out:
 	pm_runtime_put(dev);
 }
 
@@ -1823,9 +1824,6 @@ static int device_prepare(struct device *dev, pm_message_t state)
 	int (*callback)(struct device *) = NULL;
 	int ret = 0;
 
-	if (dev->power.syscore)
-		return 0;
-
 	/*
 	 * If a device's parent goes into runtime suspend at the wrong time,
 	 * it won't be possible to resume the device.  To prevent this we
@@ -1833,6 +1831,9 @@ static int device_prepare(struct device *dev, pm_message_t state)
 	 * it again during the complete phase.
 	 */
 	pm_runtime_get_noresume(dev);
+
+	if (dev->power.syscore)
+		return 0;
 
 	device_lock(dev);
 
