@@ -175,6 +175,7 @@ static void set_cpu_itimer(struct task_struct *tsk, unsigned int clock_id,
 	nval = timespec64_to_ns(&value->it_value);
 	ninterval = timespec64_to_ns(&value->it_interval);
 
+
 	spin_lock_irq(&tsk->sighand->siglock);
 
 	oval = it->expires;
