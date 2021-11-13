@@ -13,7 +13,7 @@
 #include <linux/sched/cpufreq.h>
 #include <trace/events/power.h>
 #include <trace/hooks/sched.h>
-
+#include <linux/battery_saver.h>
 #define IOWAIT_BOOST_MIN	(SCHED_CAPACITY_SCALE / 8)
 
 struct sugov_tunables {
@@ -349,7 +349,7 @@ static void sugov_iowait_boost(struct sugov_cpu *sg_cpu, u64 time,
 		return;
 
 	/* Boost only tasks waking up after IO */
-	if (!set_iowait_boost)
+	if (!set_iowait_boost || is_battery_saver_on())
 		return;
 
 	/* Ensure boost doubles only one time at each request */
