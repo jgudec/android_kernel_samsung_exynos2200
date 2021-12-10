@@ -1879,9 +1879,10 @@ static int aio_poll(struct aio_kiocb *aiocb, const struct iocb *iocb)
 	mask = vfs_poll(req->file, &apt.pt) & req->events;
 	spin_lock_irq(&ctx->ctx_lock);
 
-	if (likely(req->head)) {
-		spin_lock(&req->head->lock);
-		if (list_empty(&req->wait.entry) || req->work_scheduled) {
+	if (likely(apt.queued)) {
+		bool on_queue = poll_iocb_lock_wq(req);
+
+		if (!on_queue || req->work_scheduled) {
 			/*
 			 * aio_poll_wake() already either scheduled the async
 			 * completion work, or completed the request inline.
@@ -1897,7 +1898,7 @@ static int aio_poll(struct aio_kiocb *aiocb, const struct iocb *iocb)
 		} else if (cancel) {
 			/* Cancel if possible (may be too late though). */
 			WRITE_ONCE(req->cancelled, true);
-		} else if (!list_empty(&req->wait.entry)) {
+		} else if (on_queue) {
 			/*
 			 * Actually waiting for an event, so add the request to
 			 * active_reqs so that it can be cancelled if needed.
