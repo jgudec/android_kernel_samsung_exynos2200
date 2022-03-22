@@ -1435,8 +1435,7 @@ SYSCALL_DEFINE5(process_madvise, int, pidfd, const struct iovec __user *, vec,
 	if (behavior == MADV_WRITEBACK)
 		zram_oem_fn(ZRAM_FREE_WRITEBACK_BUFFER, buf, 0);
 #endif
-	if (ret == 0)
-		ret = total_len - iov_iter_count(&iter);
+	ret = (total_len - iov_iter_count(&iter)) ? : ret;
 
 release_mm:
 	mmput(mm);
