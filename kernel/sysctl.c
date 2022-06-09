@@ -2821,14 +2821,17 @@ static struct ctl_table vm_table[] = {
 		.extra1		= SYSCTL_ZERO,
 		.extra2		= &two_hundred,
 	},
+#ifdef CONFIG_NUMA
 	{
-		.procname	= "mmap_readaround_limit",
-		.data		= &mmap_readaround_limit,
-		.maxlen		= sizeof(mmap_readaround_limit),
+		.procname	= "numa_stat",
+		.data		= &sysctl_vm_numa_stat,
+		.maxlen		= sizeof(int),
 		.mode		= 0644,
-		.proc_handler	= proc_dointvec_minmax,
+		.proc_handler	= sysctl_vm_numa_stat_handler,
 		.extra1		= SYSCTL_ZERO,
+		.extra2		= SYSCTL_ONE,
 	},
+#endif
 #ifdef CONFIG_HUGEPAGE_POOL
 	{
 		.procname	= "use_hugepage_pool_global",
@@ -2855,15 +2858,6 @@ static struct ctl_table vm_table[] = {
 		.maxlen         = sizeof(unsigned long),
 		.mode           = 0644,
 		.proc_handler   = &hugetlb_mempolicy_sysctl_handler,
-	},
-	{
-		.procname		= "numa_stat",
-		.data			= &sysctl_vm_numa_stat,
-		.maxlen			= sizeof(int),
-		.mode			= 0644,
-		.proc_handler	= sysctl_vm_numa_stat_handler,
-		.extra1			= SYSCTL_ZERO,
-		.extra2			= SYSCTL_ONE,
 	},
 #endif
 	 {
