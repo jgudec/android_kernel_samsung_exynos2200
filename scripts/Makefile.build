@@ -223,6 +223,10 @@ ifneq ($(SKIP_STACK_VALIDATION),1)
 
 __objtool_obj := $(objtree)/tools/objtool/objtool
 
+
+ifdef CONFIG_RETHUNK
+  objtool_args += --rethunk
+endif
 ifdef CONFIG_SLS
   objtool_args += --sls
 endif
