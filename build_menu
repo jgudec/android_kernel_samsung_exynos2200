@@ -93,9 +93,9 @@ clean(){
 
 build_kernel(){
   variant
-  echo "${BGREEN}***** Compiling kernel *****${STD}"
-  [ ! -d "$OUT_DIR" ] && mkdir $OUT_DIR
-  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV afaneh_${VARIANT}_defconfig
+  echo "${GREEN}***** Compiling kernel *****${STD}"
+  [ ! -d "out" ] && mkdir out
+  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV exynos2200_${VARIANT}_defconfig
   make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV
 
   [ -e $DIR/arch/arm64/boot/Image.gz ] && cp $DIR/arch/arm64/boot/Image.gz $OUT_DIR/Image.gz
