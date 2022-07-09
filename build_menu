@@ -16,7 +16,7 @@ export PATH=$PARENT_DIR/gas/linux-x86:$PATH
 export TARGET_SOC=s5e9925
 export LLVM=1 LLVM_IAS=1
 export ARCH=arm64
-KERNEL_MAKE_ENV="LOCALVERSION=-afaneh92"
+KERNEL_MAKE_ENV="LOCALVERSION=-jgudec"
 
 # Color
 ON_BLUE=`echo -e "\033[44m"`	# On Blue
@@ -115,7 +115,7 @@ anykernel3(){
     cd $PARENT_DIR/AnyKernel3
     git reset --hard
     cp $DIR/arch/arm64/boot/Image zImage
-    sed -i "s/ExampleKernel by osm0sis/${VARIANT} kernel by afaneh92/g" anykernel.sh
+    sed -i "s/ExampleKernel by osm0sis/${VARIANT} kernel by jgudec/g" anykernel.sh
     sed -i "s/=maguro/=${VARIANT}/g" anykernel.sh
     sed -i "s/=toroplus/=/g" anykernel.sh
     sed -i "s/=toro/=/g" anykernel.sh
