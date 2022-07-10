@@ -59,7 +59,7 @@ build_tools(){
 
 variant(){
   findconfig=""
-  findconfig=($(ls arch/arm64/configs/afaneh_* 2>/dev/null))
+  findconfig=($(ls arch/arm64/configs/exynos2200_* 2>/dev/null))
   declare -i i=1
   shift 2
   echo ""

@@ -144,7 +144,7 @@ $(obj)/config_data.gz: $(obj)/config_data FORCE
 
 filechk_cat = cat $<
 
-$(obj)/config_data: arch/arm64/configs/s5e9925-b0sxxx_defconfig FORCE
+$(obj)/config_data: arch/arm64/configs/exynos2200_r0s_defconfig FORCE
 	$(call filechk,cat)
 
 $(obj)/kheaders.o: $(obj)/kheaders_data.tar.xz
