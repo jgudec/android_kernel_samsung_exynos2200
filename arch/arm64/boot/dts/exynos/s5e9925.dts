@@ -8653,7 +8653,6 @@
 		i_max = <0x00>;
 		integral_cutoff = <0x00>;
 		sustainable_power = <0x00>;
-		use-boost;
 		emergency_frequency;
 		thermal_status_level = <0x157c0 0x16378 0x16f30>;
 		phandle = <0x112>;
@@ -8681,7 +8680,6 @@
 		i_max = <0x00>;
 		integral_cutoff = <0x00>;
 		sustainable_power = <0x00>;
-		use-boost;
 		emergency_frequency;
 		phandle = <0x116>;
 	};
@@ -8702,7 +8700,6 @@
 		i_max = <0x00>;
 		integral_cutoff = <0x00>;
 		sustainable_power = <0x00>;
-		use-boost;
 		phandle = <0x118>;
 	};
 
@@ -8722,7 +8719,6 @@
 		i_max = <0x00>;
 		integral_cutoff = <0x00>;
 		sustainable_power = <0x00>;
-		use-boost;
 		phandle = <0x9a>;
 	};
 
