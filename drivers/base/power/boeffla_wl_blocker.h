@@ -16,7 +16,7 @@
 
 #define BOEFFLA_WL_BLOCKER_VERSION	"1.1.0"
 
-#define LIST_WL_DEFAULT				""
+#define LIST_WL_DEFAULT				"BT_bt_wake;BT_host_wake;bbd_wake_lock;ssp_sensorhub_wake_lock;ssp_wake_lock;ssp_comm_wake_lock;abox;qcom_rx_wakelock;umts_ipc0;umts_ipc1;19f00000.drmdecon;19eb0000.drmdsim;pmo_wow_wl;sec-battery-vbus;sec-battery-monitor"
 
 #define LENGTH_LIST_WL				8192
 #define LENGTH_LIST_WL_DEFAULT		8192
