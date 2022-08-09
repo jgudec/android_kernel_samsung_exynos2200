@@ -7,3 +7,5 @@ obj-$(CONFIG_HAVE_CLK)	+= clock_ops.o
 obj-$(CONFIG_PM_QOS_KUNIT_TEST) += qos-test.o
 
 ccflags-$(CONFIG_DEBUG_DRIVER) := -DDEBUG
+
+obj-$(CONFIG_BOEFFLA_WL_BLOCKER)	+= boeffla_wl_blocker.o
