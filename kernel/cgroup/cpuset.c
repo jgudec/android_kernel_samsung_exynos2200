@@ -2240,7 +2240,8 @@ static void cpuset_attach(struct cgroup_taskset *tset)
 	cs = css_cs(css);
 
 	mutex_lock(&cpuset_mutex);
-	cpus_read_lock();
+
+	lockdep_assert_cpus_held();	/* see cgroup_attach_lock() */
 	
 	guarantee_online_mems(cs, &cpuset_attach_nodemask_to);
 
@@ -2293,7 +2294,7 @@ static void cpuset_attach(struct cgroup_taskset *tset)
 		wake_up(&cpuset_attach_wq);
 
 	mutex_unlock(&cpuset_mutex);
-	cpus_read_unlock();
+
 }
 
 /* The various types of files and directories in a cpuset file system */
