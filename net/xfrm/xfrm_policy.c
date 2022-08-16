@@ -3169,7 +3169,7 @@ ok:
 	return dst;
 
 nopol:
-	if (!(flags & XFRM_LOOKUP_ICMP)) {
+if (!(flags & XFRM_LOOKUP_ICMP)) {
 		dst = dst_orig;
 		goto ok;
 	}
