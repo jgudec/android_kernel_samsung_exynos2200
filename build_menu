@@ -6,6 +6,7 @@ menu_version="v2.3"
 DIR=`readlink -f .`
 OUT_DIR=$DIR/out
 PARENT_DIR=`readlink -f ${DIR}/..`
+VERSION=$1
 
 export CROSS_COMPILE=$PARENT_DIR/clang-r416183b/bin/aarch64-linux-gnu-
 export CC=$PARENT_DIR/clang-r416183b/bin/clang
@@ -94,13 +95,13 @@ build_kernel(){
   KERNEL_MAKE_ENV="LOCALVERSION=-loki"
   variant
   echo "${GREEN}***** Compiling kernel *****${STD}"
-  [ ! -d "out" ] && mkdir out
+  [ ! -d "out" ] && mkdir -p out/${VARIANT}
   make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV exynos2200_${VARIANT}_defconfig
   make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV
 
-  [ -e $DIR/arch/arm64/boot/Image.gz ] && cp $DIR/arch/arm64/boot/Image.gz $OUT_DIR/Image.gz
-  if [ -e $DIR/arch/arm64/boot/Image ]; then
-    cp $DIR/arch/arm64/boot/Image $OUT_DIR/Image
+  [ -e arch/arm64/boot/Image.gz ] && cp arch/arm64/boot/Image.gz $(pwd)/out/${VARIANT}/Image.gz
+  if [ -e arch/arm64/boot/Image ]; then
+    cp arch/arm64/boot/Image $(pwd)/out/${VARIANT}/Image
 
     echo "${BGREEN}***** Ready to Roar *****${STD}"
     pause 'continue'
@@ -132,7 +133,9 @@ anykernel3(){
     sed -i "s/patch_fstab/#patch_fstab/g" anykernel.sh
     sed -i "s/dump_boot/split_boot/g" anykernel.sh
     sed -i "s/write_boot/flash_boot/g" anykernel.sh
-    zip -r9 $PARENT_DIR/Loki_Kernel_${VARIANT}_`date '+%Y_%m_%d'`.zip * -x .git README.md *placeholder
+    zip -r9 $PARENT_DIR/Loki_Kernel_v${VERSION}_${VARIANT}_AOSP.zip * -x .git README.md *placeholder
+    sed -i 's|/dev/block/bootdevice/by-name/boot|/dev/block/by-name/boot|g' anykernel.sh
+    zip -r9 $PARENT_DIR/Loki_Kernel_v${VERSION}_${VARIANT}_OneUI.zip * -x .git README.md *placeholder
     cd $DIR
     pause 'continue'
   else
@@ -148,11 +151,11 @@ build_tools
 # Show menu
 show_menus(){
   clear
-  echo "${ON_BLUE}AFANEH-KERNEL-BUILD menu $menu_version${STD}"
-  echo " 1. ${UNDER_LINE}B${STD}uild kernel"
-  echo " 2. ${UNDER_LINE}C${STD}lean"
-  echo " 3. Make ${UNDER_LINE}f${STD}lashable zip"
-  echo " 4. E${UNDER_LINE}x${STD}it"
+  echo "${ON_BLUE} B U I L D - M E N U ${STD}"
+  echo "1. ${Under_Line}B${STD}uild kernel"
+  echo "2. ${Under_Line}C${STD}lean"
+  echo "3. Make ${Under_Line}f${STD}lashable zips"
+  echo "4. E${Under_Line}x${STD}it"
 }
 
 # Read input
