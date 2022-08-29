@@ -5,6 +5,7 @@
 DIR=`readlink -f .`
 PARENT_DIR=`readlink -f ${DIR}/..`
 VERSION=$1
+DEFCONFIG_LOKI=loki_defconfig
 
 export CROSS_COMPILE=$PARENT_DIR/clang-r416183b/bin/aarch64-linux-gnu-
 export CC=$PARENT_DIR/clang-r416183b/bin/clang
@@ -88,18 +89,41 @@ clean(){
 }
 
 build_kernel(){
+
   KERNEL_MAKE_ENV="LOCALVERSION=-loki"
+
   variant
+
   echo "${GREEN}***** Compiling kernel *****${STD}"
+
+  START_TIME=`date +%T`
+	START_TIME_SEC=`date +%s`
+
   [ ! -d "out" ] && mkdir -p out/${VARIANT}
-  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV exynos2200_${VARIANT}_defconfig
+
+  cp -f $(pwd)/arch/arm64/configs/exynos2200_${VARIANT}_defconfig $(pwd)/arch/arm64/configs/tmp_defconfig
+	cat $(pwd)/arch/arm64/configs/$DEFCONFIG_LOKI >> $(pwd)/arch/arm64/configs/tmp_defconfig
+
+  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV tmp_defconfig
   make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV
 
+  END_TIME=`date +%T`
+  END_TIME_SEC=`date +%s`
+
+  echo ""
+  echo "Start compile time is $START_TIME."
+  echo "End compile time is $END_TIME."
+	let "ELAPSED_TIME=$END_TIME_SEC - $START_TIME_SEC"
+	echo "Total compile time is $ELAPSED_TIME seconds."
+  echo ""
+
   [ -e arch/arm64/boot/Image.gz ] && cp arch/arm64/boot/Image.gz $(pwd)/out/${VARIANT}/Image.gz
+
   if [ -e arch/arm64/boot/Image ]; then
     cp arch/arm64/boot/Image $(pwd)/out/${VARIANT}/Image
 
     echo "${GREEN}***** Ready to Roar *****${STD}"
+    rm $(pwd)/arch/arm64/configs/tmp_defconfig
     pause 'continue'
   else
     pause 'return to Main menu' 'Kernel STUCK in BUILD!, '
