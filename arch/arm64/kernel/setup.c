@@ -296,6 +296,21 @@ u64 cpu_logical_map(unsigned int cpu)
 	return __cpu_logical_map[cpu];
 }
 
+static int __init androidboot_startupmode(char *p)
+{
+	char *offset_addr;
+
+	if (strcmp(p, "usb_charger"))
+		return 1;
+
+	if ((offset_addr =
+		     strstr(boot_command_line, "androidboot.mode=normal")))
+		memset(offset_addr, ' ', sizeof("androidboot.mode=normal"));
+
+	return 0;
+}
+early_param("androidboot.startupmode", androidboot_startupmode);
+
 void __init __no_sanitize_address setup_arch(char **cmdline_p)
 {
 	init_mm.start_code = (unsigned long) _text;
