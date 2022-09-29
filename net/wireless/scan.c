@@ -313,8 +313,7 @@ static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
 	tmp_old = (tmp_old) ? tmp_old + tmp_old[1] + 2 : ie;
 	
 	while (tmp_old + 2 - ie <= ielen &&
-		   tmp_old + tmp_old[1] + 2 - ie <= ielen) {
-
+	       tmp_old + tmp_old[1] + 2 - ie <= ielen) {
 		if (tmp_old[0] == 0) {
 			tmp_old++;
 			continue;
