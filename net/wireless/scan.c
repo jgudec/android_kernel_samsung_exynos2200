@@ -143,6 +143,7 @@ static inline void bss_ref_get(struct cfg80211_registered_device *rdev,
 	lockdep_assert_held(&rdev->bss_lock);
 
 	bss->refcount++;
+
 	if (bss->pub.hidden_beacon_bss)
 		bss_from_pub(bss->pub.hidden_beacon_bss)->refcount++;
 
