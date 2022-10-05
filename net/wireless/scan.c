@@ -1632,7 +1632,6 @@ static void cfg80211_update_hidden_bsses(struct cfg80211_internal_bss *known,
 	}
 }
 
-
 static bool
 cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
 			  struct cfg80211_internal_bss *known,
@@ -1682,7 +1681,7 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
 		/* Override IEs if they were from a beacon before */
 		if (old == rcu_access_pointer(known->pub.ies))
 			rcu_assign_pointer(known->pub.ies, new->pub.beacon_ies);
-		
+
 		cfg80211_update_hidden_bsses(known, new->pub.beacon_ies, old);
 
 		if (old)
