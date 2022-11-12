@@ -358,6 +358,8 @@ config KASAN_SHADOW_OFFSET
 
 source "arch/arm64/Kconfig.platforms"
 
+source "arch/arm64/Kconfig.projects"
+
 menu "Kernel Features"
 
 menu "ARM errata workarounds via the alternatives framework"

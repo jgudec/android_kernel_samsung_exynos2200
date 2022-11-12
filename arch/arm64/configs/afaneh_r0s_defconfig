@@ -341,6 +341,14 @@ CONFIG_ARCH_SPRD=y
 # end of Platform selection
 
 #
+# project selection
+#
+# CONFIG_SEC_B0S_PROJECT is not set
+# CONFIG_SEC_G0S_PROJECT is not set
+CONFIG_SEC_R0S_PROJECT=y
+# end of project selection
+
+#
 # Kernel Features
 #
 
