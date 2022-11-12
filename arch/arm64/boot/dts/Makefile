@@ -125,6 +125,14 @@ dtbo-y += samsung/g0s/g0s_eur_openx_w01_r23.dtbo
 dtbo-y += samsung/g0s/g0s_eur_openx_w01_r27.dtbo
 dtbo-y += samsung/g0s/g0s_eur_openx_w01_r19.dtbo
 dtbo-y += samsung/g0s/g0s_eur_openx_w01_r20.dtbo
+dtbo-y += samsung/r0s/r0s_eur_openx_w01_r24.dtbo
+dtbo-y += samsung/r0s/r0s_eur_openx_w01_r19.dtbo
+dtbo-y += samsung/r0s/r0s_eur_openx_w01_r26.dtbo
+dtbo-y += samsung/r0s/r0s_eur_openx_w01_r23.dtbo
+dtbo-y += samsung/r0s/r0s_eur_openx_w01_r20.dtbo
+dtbo-y += samsung/r0s/r0s_eur_openx_w01_r21.dtbo
+dtbo-y += samsung/r0s/r0s_eur_openx_w01_r25.dtbo
+dtbo-y += samsung/r0s/r0s_eur_openx_w01_r27.dtbo
 
 targets += dtbs
 DTB_LIST  := $(dtb-y) $(dtbo-y)
