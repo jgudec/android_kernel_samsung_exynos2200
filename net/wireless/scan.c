@@ -343,7 +343,8 @@ static size_t cfg80211_gen_new_ie(const u8 *ie, size_t ielen,
 			 * which is skipped anyway).
 			 */
 			if (tmp_old[0] == WLAN_EID_VENDOR_SPECIFIC) {
-				if (!memcmp(tmp_old + 2, tmp + 2, oui_header_len(tmp + 2))) {
+				if (tmp_old[1] >= 5 && tmp[1] >= 5 &&
+				    !memcmp(tmp_old + 2, tmp + 2, 5)) {
 					/* same vendor ie, copy from
 					 * subelement
 					 */
