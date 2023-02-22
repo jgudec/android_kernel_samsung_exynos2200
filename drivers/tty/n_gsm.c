@@ -2717,7 +2717,6 @@ static ssize_t gsmld_write(struct tty_struct *tty, struct file *file,
 		ret = tty->ops->write(tty, buf, nr);
 	else
 		set_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
-
 	mutex_unlock(&gsm->tx_mutex);
 
 	return ret;
