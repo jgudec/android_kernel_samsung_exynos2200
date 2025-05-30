@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ "$BRANCH", "$DEFAULT_BRANCH" ]
+  pull_request:
+    branches: [ "$DEFAULT_BRANCH" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        gcc: [10,11,12]
+        arch: [arm64]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup toolchain
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+      - name: Build mrkernel
+        run: |
+          make mrkernel_defconfig O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- KCFLAGS="-Os -flto"
+          make -j$(nproc) O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+          make -C out post-build
